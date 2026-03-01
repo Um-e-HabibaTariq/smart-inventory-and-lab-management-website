@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LabFlow | Requests</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="layout" style="display: flex;">
+        
+        <!-- Sidebar -->
+        <aside class="sidebar" style="width: 260px; background: #1e293b; height: 100vh; padding: 20px; position: fixed;">
+            <div class="logo">
+                <h2 style="color: #38bdf8;">LABFLOW</h2>
+            </div>
+            <nav>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 15px;">
+                        <a href="/dashboard" style="text-decoration: none; color: white;">Dashboard</a>
+                    </li>
+                    <li style="padding: 15px;">
+                        <a href="/inventory" style="text-decoration: none; color: white;">Inventory</a>
+                    </li>
+                    <li style="padding: 15px; background: #334155; border-radius: 8px;">
+                        <a href="/requests" style="text-decoration: none; color: #38bdf8; font-weight: bold;">Requests</a>
+                    </li>
+                    <li style="padding: 15px;">
+                        <a href="/maintenance" style="text-decoration: none; color: white;">Maintenance</a>
+                    </li>
+                    <li style="padding: 15px;">
+                        <a href="/users" style="text-decoration: none; color: white;">Users</a>
+                    </li>
+                </ul>
+            </nav>
+            <div style="margin-top: 50px;">
+                <a href="/" style="color: #ef4444; text-decoration: none; padding: 15px;">Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" style="margin-left: 300px; padding: 40px; width: 100%;">
+            <header style="margin-bottom: 30px;">
+                <h1>Equipment Requests</h1>
+                <p style="color: #94a3b8;">Manage student and faculty requests for lab assets</p>
+            </header>
+
+            <table style="width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; color: white;">
+                <thead style="background: #334155; color: #38bdf8;">
+                    <tr>
+                        <th style="padding: 15px; text-align: left;">Request ID</th>
+                        <th style="padding: 15px; text-align: left;">User Name</th>
+                        <th style="padding: 15px; text-align: left;">Item Requested</th>
+                        <th style="padding: 15px; text-align: left;">Date</th>
+                        <th style="padding: 15px; text-align: left;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="requests-list">
+                    <!-- Data will load here dynamically -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script>
+        // Load requests from database
+        function loadRequests() {
+            fetch('/api/requests')
+                .then(res => res.json())
+                .then(data => {
+                    const table = document.getElementById('requests-list');
+                    table.innerHTML = '';
+
+                    data.forEach(req => {
+                        const row = `
+                            <tr style="border-bottom: 1px solid #334155;">
+                                <td style="padding: 15px;">#REQ-${req.id}</td>
+                                <td style="padding: 15px;">${req.user_name}</td>
+                                <td style="padding: 15px; font-weight: bold; color: #38bdf8;">${req.item_name}</td>
+                                <td style="padding: 15px;">${req.request_date}</td>
+                                <td style="padding: 15px;">
+                                    ${
+                                        req.status === 'Pending'
+                                        ? `
+                                            <button onclick="approveRequest(${req.id})"
+                                                style="background: #10b981; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin-right: 5px;">
+                                                Approve
+                                            </button>
+                                            <button onclick="rejectRequest(${req.id})"
+                                                style="background: #ef4444; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">
+                                                Reject
+                                            </button>
+                                          `
+                                        : `<span style="font-weight:bold; color:${
+                                                req.status === 'Approved' ? '#10b981' : '#ef4444'
+                                            }">${req.status}</span>`
+                                    }
+                                </td>
+                            </tr>
+                        `;
+                        table.innerHTML += row;
+                    });
+                });
+        }
+
+        function approveRequest(id) {
+            fetch('/approve-request/' + id, { method: 'POST' })
+                .then(res => res.text())
+                .then(msg => {
+                    alert(msg);
+                    loadRequests();
+                });
+        }
+
+        function rejectRequest(id) {
+            fetch('/reject-request/' + id, { method: 'POST' })
+                .then(res => res.text())
+                .then(msg => {
+                    alert(msg);
+                    loadRequests();
+                });
+        }
+
+        // Load when page opens
+        window.onload = loadRequests;
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LabFlow | Add New Item</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            color: white;
+        }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #38bdf8; font-weight: 600; }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: white;
+            border-radius: 8px;
+            outline: none;
+        }
+        input:focus { border-color: #38bdf8; }
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-submit:hover { background: #1d4ed8; }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #94a3b8; text-decoration: none; }
+        .back-link:hover { color: #38bdf8; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2 style="text-align: center; margin-bottom: 25px;">Add New Lab Item</h2>
+        
+    <form action="/add-item" method="POST">
+            <div class="form-group">
+                <label for="item_name">Item Name</label>
+                <input type="text" id="item_name" name="item_name" placeholder="e.g. Digital Multimeter" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category">
+                    <option value="Electronics">Electronics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Tools">Tools</option>
+                    <option value="Software">Software</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity" value="1" min="1" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Add to Database</button>
+            <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+        </form>
+    </div>
+</body>
+</html>

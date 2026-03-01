@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LabFlow | Admin Panel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Admin specific styles */
+        .btn-delete { background: #dc2626; color: white; padding: 5px 10px; border-radius: 4px; border: none; cursor: pointer; }
+        .btn-edit { background: #f59e0b; color: white; padding: 5px 10px; border-radius: 4px; border: none; cursor: pointer; margin-right: 5px; }
+        
+        /* Modal Styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
+        .modal-content { background: #1e293b; margin: 10% auto; padding: 20px; border-radius: 12px; width: 400px; border: 1px solid #334155; }
+        .modal-content h2 { margin-bottom: 20px; color: #38bdf8; }
+        .modal-content input, .modal-content select { width: 100%; padding: 10px; margin-bottom: 15px; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 6px; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo"><h2>LABFLOW <span style="font-size: 10px; color: #f59e0b;">ADMIN</span></h2></div>
+        <nav>
+            <ul>
+                <li class="active">Inventory Management</li>
+                <li>Pending Requests</li>
+                <li>Damage Reports</li>
+                <li>User Settings</li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer"><a href="/login.html" class="logout-btn">Logout</a></div>
+    </aside>
+
+    <main class="main-content">
+        <header>
+            <div>
+                <h1>Equipment Management</h1>
+                <p>Add, Update or Remove Lab Assets</p>
+            </div>
+            <button class="btn-add" onclick="toggleModal(true)">+ Add New Item</button>
+        </header>
+
+        <section class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-inventory-list">
+                    <tr>
+                        <td>Arduino Uno R3</td>
+                        <td>Electronics</td>
+                        <td>25</td>
+                        <td><span class="status-tag status-available">In Stock</span></td>
+                        <td>
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <div id="addItemModal" class="modal">
+        <div class="modal-content">
+            <h2>Add New Equipment</h2>
+            <form action="/add-item" method="POST">
+                <input type="text" name="item_name" placeholder="Item Name" required>
+                <select name="category">
+                    <option value="Electronics">Electronics</option>
+                    <option value="Tools">Tools</option>
+                    <option value="Chemicals">Chemicals</option>
+                </select>
+                <input type="number" name="quantity" placeholder="Quantity" required>
+                <div class="modal-actions">
+                    <button type="button" onclick="toggleModal(false)" style="background: transparent; color: white; border: none;">Cancel</button>
+                    <button type="submit" class="btn-add">Save Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function toggleModal(show) {
+            document.getElementById('addItemModal').style.display = show ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

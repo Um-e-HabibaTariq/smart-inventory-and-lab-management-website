@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LabFlow | Inventory Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Sidebar links ko clickable banane ke liye styling */
+        .sidebar nav ul li a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            width: 100%;
+        }
+        .sidebar nav ul li { cursor: pointer; transition: 0.3s; }
+        .sidebar nav ul li:hover { background: #334155; }
+        .sidebar nav ul li.active { background: #334155; color: #38bdf8; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <h2>LABFLOW</h2>
+        </div>
+        <nav>
+            <ul>
+                <li class="active"><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/inventory">Inventory</a></li>
+                <li><a href="/requests">Requests</a></li>
+                <li><a href="/maintenance">Maintenance</a></li>
+                <li><a href="/users">Users</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="/" class="logout-btn">Logout</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header>
+            <div class="header-left">
+                <h1>Inventory Overview</h1>
+                <p>Track and manage your laboratory assets</p>
+            </div>
+            <div class="header-right">
+                <input type="text" id="searchInput" placeholder="Search equipment..." onkeyup="searchTable()">
+                <button class="btn-add" onclick="window.location.href='/add-item-page'">+ Add New</button>
+            </div>
+        </header>
+
+     <section class="stats-container">
+            <div class="card blue">
+                <h3 class="stat-label">Total Items</h3>
+                <p id="totalItems" class="stat-value">0</p>
+            </div>
+            
+            <div class="card green">
+                <h3 class="stat-label">Available</h3>
+                <p id="availableItems" class="stat-value">0</p>
+            </div>
+            
+            <div class="card red">
+                <h3 class="stat-label">Damaged</h3>
+                <p id="damagedItems" class="stat-value">0</p>
+            </div>
+        </section>
+
+        <section class="table-container">
+            <table id="inventoryTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Item Name</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="inventory-list">
+                    <tr>
+                        <td colspan="5" style="text-align:center; padding: 20px;">Loading data from lab...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Simple search function for the dashboard
+        function searchTable() {
+            let input = document.getElementById("searchInput").value.toUpperCase();
+            let table = document.getElementById("inventoryTable");
+            let tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName("td")[1]; // Item Name column
+                if (td) {
+                    let txtValue = td.textContent || td.innerText;
+                    tr[i].style.display = txtValue.toUpperCase().indexOf(input) > -1 ? "" : "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

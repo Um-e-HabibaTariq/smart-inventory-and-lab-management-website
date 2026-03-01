@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LabFlow - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            background: #1e1e1e;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-box {
+            width: 350px;
+            margin: 100px auto;
+            background: #252525;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .login-box h2 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: #333;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-box">
+        <h2>LabFlow Login</h2>
+
+        <form action="/login" method="POST">
+            <input type="email" name="email" placeholder="Email Address" required>
+
+            <input type="password" name="password" placeholder="Password" required>
+
+            <select name="role" required>
+                <option value="Student">Student</option>
+                <option value="Faculty">Faculty</option>
+                <option value="Lab Incharge">Lab Incharge</option>
+                <option value="Admin">Admin</option>
+            </select>
+
+            <button type="submit">Login</button>
+        </form>
+
+    </div>
+
+
+        <p style="text-align: center; margin-top: 10px;">
+            Don't have an account? 
+            <a href="/signup.html">Signup</a>
+        </p>
+    </div>
+</body>
+</html>

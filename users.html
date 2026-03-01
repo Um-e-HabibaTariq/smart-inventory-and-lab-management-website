@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<html lang="en">
+<head>
+    
+    <title>Lab Users</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<main class="main-content">
+    <div class="users-container">
+
+        <h1>Lab Users</h1>
+
+        <table class="users-table">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Email Address</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody id="user-display-list">
+                <!-- Data will load here -->
+            </tbody>
+        </table>
+
+    </div>
+</main>
+
+<script>
+    fetch('/api/users')
+        .then(res => res.json())
+        .then(users => {
+            const list = document.getElementById('user-display-list');
+
+            if (users.length === 0) {
+                list.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="no-data">No users found</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            list.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>
+                        <span class="role ${user.role.toLowerCase().replace(" ", "-")}">
+                            ${user.role}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        })
+        .catch(error => {
+            document.getElementById('user-display-list').innerHTML = `
+                <tr>
+                    <td colspan="3" class="no-data">Error loading users</td>
+                </tr>
+            `;
+        });
+</script>
+
+</body>
+</html>

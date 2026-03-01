@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<html lang="en">
+<head>
+    
+    <title>LabFlow - Signup</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .signup-box { width: 400px; margin: 50px auto; background: #252525; padding: 30px; border-radius: 10px; color: white; }
+        input, select { width: 100%; padding: 10px; margin: 10px 0; background: #333; border: 1px solid #444; color: white; border-radius: 5px; }
+        button { width: 100%; padding: 10px; background: #28a745; border: none; color: white; cursor: pointer; border-radius: 5px; font-weight: bold; }
+        button:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    <div class="signup-box">
+        <h2 style="text-align: center; color: #28a745;">Create Account</h2>
+        <form action="/signup" method="POST">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+            
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="email@university.edu" required>
+            
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Create a password" required>
+            
+            <label>Select Role</label>
+            <select name="role">
+                <option value="Student">Student</option>
+                <option value="Faculty">Faculty</option>
+                <option value="Lab Incharge">Lab Incharge</option>
+                <option value="Admin">Admin</option>
+            </select>
+            
+            <button type="submit">Register Now</button>
+        </form>
+        <p style="text-align: center; margin-top: 15px;">Already have an account? <a href="/login.html" style="color: #28a745;">Login</a></p>
+    </div>
+</body>
+</html>
